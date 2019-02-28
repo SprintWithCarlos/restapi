@@ -20,3 +20,4 @@ Red are protected routes
 ## Video 4: Error Handling and improvements
 
 - Adds nodemon, morgan
+- adds error handling
