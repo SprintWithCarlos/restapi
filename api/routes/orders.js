@@ -10,10 +10,18 @@ router.get('/', (req, res, next) => {
 });
 // CREATE ONE
 router.post('/', (req, res, next) => {
-  res.status(200)
-    .json({
-      message: 'New Order Created!',
-    });
+  const {
+    productId,
+    quantity,
+  } = req.body;
+  const order = {
+    productId,
+    quantity,
+  };
+  res.status(201).json({
+    message: 'Handling POST request to /orders',
+    order,
+  });
 });
 // GET ONE
 router.get('/:orderId', (req, res, next) => {

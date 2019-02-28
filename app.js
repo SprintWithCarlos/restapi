@@ -1,11 +1,15 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
 
 const app = express();
 // Middlewares
 app.use(morgan('dev'));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cors());
 
 // Routes
 app.use('/products', productRoutes);

@@ -9,8 +9,14 @@ router.get('/', (req, res, next) => {
 });
 // CREATE ONE
 router.post('/', (req, res, next) => {
-  res.status(200).json({
+  const { name, price } = req.body;
+  const product = {
+    name,
+    price,
+  };
+  res.status(201).json({
     message: 'Handling POST request to /products',
+    product,
   });
 });
 // GET ONE

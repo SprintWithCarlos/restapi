@@ -21,3 +21,20 @@ Red are protected routes
 
 - Adds nodemon, morgan
 - adds error handling
+
+## Video 5: CORS and Body Parser
+
+For parsing body I opted for destructuring the request instead
+
+```
+const { name, price } = req.body;
+const product = {
+    name,
+    price,
+};
+```
+
+Also, instead of using body-parser I used Express since now is included
+
+**C**ross - **O**rigin **R**esource **S**haring
+For CORS I preferred installing npm cors
