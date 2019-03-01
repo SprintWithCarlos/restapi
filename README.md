@@ -38,3 +38,7 @@ Also, instead of using body-parser I used Express since now is included
 
 **C**ross - **O**rigin **R**esource **S**haring
 For CORS I preferred installing npm cors
+
+##Video 6: MongoDB and Mongoose
+I preferred to use async/await with try and catch blocks for mongoose methods
+I used findOneAndUpdate() method instead in products

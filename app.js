@@ -1,10 +1,19 @@
+require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+const mongoose = require('mongoose');
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
 
 const app = express();
+
+// Database
+
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+}).then(() => console.log('La base de datos está conectada')).catch(err => console.error(err));
+mongoose.set('useFindAndModify', false);
 // Middlewares
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
