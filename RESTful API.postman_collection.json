@@ -1,0 +1,352 @@
+{
+	"info": {
+		"_postman_id": "9fcd4592-8112-4ddf-855f-92544024ee3a",
+		"name": "RESTful API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "CREATE ONE Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7f8ee505-2dbc-47fd-9a5f-563e3d1606ef",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"product1\",\n\t\"price\": 5\n}"
+						},
+						"url": {
+							"raw": "{{URL}}/products",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ALL Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4f8d368c-ded3-437e-8e46-d40b04343623",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{URL}}/products",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ONE Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ee4f74ca-25d0-4f25-8c5a-8634cd5eae45",
+								"exec": [
+									"pm.test(\"Successful GET request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,404,500]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{URL}}/products/5c785f1a269318e6bc544c49",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"products",
+								"5c785f1a269318e6bc544c49"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH ONE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7730a674-ea75-4a0a-9078-30f6645adc59",
+								"exec": [
+									"pm.test(\"Successful GET request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,404,500]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"si señor juan\",\n\t\"price\": 22\n}"
+						},
+						"url": {
+							"raw": "{{URL}}/products/5c78723ccaf7b1f84b5fa597",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"products",
+								"5c78723ccaf7b1f84b5fa597"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE ONE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0104c32d-c7e2-40e4-b618-42ce88ee71e5",
+								"exec": [
+									"pm.test(\"Successful GET request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,404,500]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{URL}}/products/5c784d36973ef2d4c19a58c1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"products",
+								"5c784d36973ef2d4c19a58c1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "orders",
+			"item": [
+				{
+					"name": "GET ALL Orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "62b48dca-b1e1-47f4-9b46-dd2ce0ec4560",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{URL}}/orders",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE ONE Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d25b80e0-bfd2-4cc4-9eec-d51ae9d89a09",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"productId\": \"sabroso\",\n\t\"quantity\": 50\n}"
+						},
+						"url": {
+							"raw": "{{URL}}/orders",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ONE Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "889707be-285c-42b8-97f3-21d2999766fe",
+								"exec": [
+									"pm.test(\"Successful GET request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,404,500]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{URL}}/orders/5c7843c5b62973cba675c7a",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"orders",
+								"5c7843c5b62973cba675c7a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE ONE Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "188f5816-71f3-48d3-8a3d-7b1fa59f4ab6",
+								"exec": [
+									"pm.test(\"Successful GET request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,404,500]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{URL}}/orders/5c7863e9cb2a83eb8c3caa7e",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"orders",
+								"5c7863e9cb2a83eb8c3caa7e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

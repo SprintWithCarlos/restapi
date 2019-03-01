@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-console */
 const express = require('express');
@@ -8,9 +9,21 @@ const Product = require('../models/product');
 // GET ALL
 router.get('/', async (req, res, next) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find().select('_id name price');
+    const response = {
+      count: products.length,
+      products: products.map(product => ({
+        name: product.name,
+        price: product.price,
+        _id: product._id,
+        request: {
+          type: 'GET',
+          url: `http://localhost:5000/products/${product._id}`,
+        },
+      })),
+    };
     products.length >= 1 ? (
-      res.status(200).json(products)
+      res.status(200).json(response)
     ) : (
       res.status(200).json({
         message: 'There are no products yet',
@@ -32,9 +45,19 @@ router.post('/', async (req, res, next) => {
       price,
     });
     newProduct.save();
+    console.log(newProduct);
     res.status(201).json({
       message: 'New product created',
-      newProduct,
+      createdProduct: {
+        _id: newProduct._id,
+        name: newProduct.name,
+        price: newProduct.price,
+        request: {
+          type: 'GET',
+          url: `http://localhost:5000/products/${newProduct._id}`,
+        },
+
+      },
     });
   } catch (error) {
     res.status(500).json(error);
@@ -44,7 +67,7 @@ router.post('/', async (req, res, next) => {
 router.get('/:productId', async (req, res, next) => {
   try {
     const id = req.params.productId;
-    const product = await Product.findById(id);
+    const product = await Product.findById(id).select('_id name price');
     product ? (
       res.status(200).json({
         message: 'You have send an ID',
@@ -75,7 +98,7 @@ router.patch('/:productId', async (req, res, next) => {
       price,
     }, () => {
 
-    });
+    }).select('_id name price');
     res.status(200).json({
       message: ' Product Updated!',
       updatedProduct,
@@ -90,13 +113,18 @@ router.patch('/:productId', async (req, res, next) => {
 router.delete('/:productId', async (req, res, next) => {
   try {
     const id = req.params.productId;
-    const deletedProduct = await Product.deleteOne({
-      id,
-    });
+    const deletedProduct = await Product.findByIdAndDelete(id);
     deletedProduct ? (
       res.status(200).json({
         message: 'Deleted Product!',
-        deletedProduct,
+        request: {
+          type: 'POST',
+          url: 'http://localhost:5000/products/',
+          body: {
+            name: 'String',
+            price: 'Number',
+          },
+        },
       })
     ) : (
       res.status(404).json({

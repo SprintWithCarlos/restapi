@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-expressions */
 const express = require('express');
 
@@ -7,9 +8,21 @@ const Order = require('../models/order');
 // GET ALL
 router.get('/', async (req, res, next) => {
   try {
-    const orders = await Order.find();
+    const orders = await Order.find().select('_id productId quantity');
+    const response = {
+      count: orders.length,
+      orders: orders.map(order => ({
+        productId: order.productId,
+        quantity: order.quantity,
+        _id: order._id,
+        request: {
+          type: 'GET',
+          url: `http://localhost:5000/orders/${order._id}`,
+        },
+      })),
+    };
     orders.length >= 1 ? (
-      res.status(200).json(orders)
+      res.status(200).json(response)
     ) : (
       res.status(200).json({
         message: 'There are no orders yet',
@@ -32,8 +45,16 @@ router.post('/', async (req, res, next) => {
     });
     await newOrder.save();
     res.status(201).json({
-      message: 'Handling POST request to /orders',
-      newOrder,
+      message: 'New order created',
+      createdOrder: {
+        _id: newOrder._id,
+        name: newOrder.name,
+        price: newOrder.price,
+        request: {
+          type: 'GET',
+          url: `http://localhost:5000/orders/${newOrder._id}`,
+        },
+      },
     });
   } catch (error) {
     res.status(500).json(error);
@@ -43,7 +64,7 @@ router.post('/', async (req, res, next) => {
 router.get('/:orderId', async (req, res, next) => {
   try {
     const id = req.params.orderId;
-    const order = await Order.findById(id);
+    const order = await Order.findById(id).select('_id productId quantity');
     order ? (
       res.status(200).json(order)
     ) : (

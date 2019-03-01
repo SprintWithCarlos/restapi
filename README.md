@@ -42,3 +42,8 @@ For CORS I preferred installing npm cors
 ##Video 6: MongoDB and Mongoose
 I preferred to use async/await with try and catch blocks for mongoose methods
 I used findOneAndUpdate() method instead in products
+
+##Video 7: Mongoose validation
+
+- Added validation to both models and routes
+- Added Postman Collection with tests for all 9 routes
