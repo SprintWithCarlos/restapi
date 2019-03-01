@@ -47,3 +47,7 @@ I used findOneAndUpdate() method instead in products
 
 - Added validation to both models and routes
 - Added Postman Collection with tests for all 9 routes
+
+##Video 8: Managing orders with Mongoose
+
+- Completed orders route and model

@@ -4,6 +4,7 @@ const express = require('express');
 
 const router = express.Router();
 const Order = require('../models/order');
+const Product = require('../models/product');
 
 // GET ALL
 router.get('/', async (req, res, next) => {
@@ -29,7 +30,10 @@ router.get('/', async (req, res, next) => {
       })
     );
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).json({
+      message: 'There is a something wrong',
+      error,
+    });
   }
 });
 // CREATE ONE
@@ -39,25 +43,35 @@ router.post('/', async (req, res, next) => {
       productId,
       quantity,
     } = req.body;
-    const newOrder = new Order({
-      productId,
-      quantity,
-    });
-    await newOrder.save();
-    res.status(201).json({
-      message: 'New order created',
-      createdOrder: {
-        _id: newOrder._id,
-        name: newOrder.name,
-        price: newOrder.price,
-        request: {
-          type: 'GET',
-          url: `http://localhost:5000/orders/${newOrder._id}`,
+    const foundProduct = await Product.findById(productId);
+    if (foundProduct) {
+      const newOrder = new Order({
+        productId,
+        quantity,
+      });
+      await newOrder.save();
+      res.status(201).json({
+        message: 'New order created',
+        createdOrder: {
+          _id: newOrder._id,
+          name: newOrder.name,
+          price: newOrder.price,
+          request: {
+            type: 'GET',
+            url: `http://localhost:5000/orders/${newOrder._id}`,
+          },
         },
-      },
-    });
+      });
+    } else {
+      res.status(404).json({
+        message: 'Product not found',
+      });
+    }
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).json({
+      message: 'There is a something wrong',
+      error,
+    });
   }
 });
 // GET ONE
@@ -74,7 +88,8 @@ router.get('/:orderId', async (req, res, next) => {
     );
   } catch (error) {
     res.status(500).json({
-      message: 'There is a wrong format for the ID',
+      message: 'There is a something wrong',
+      error,
     });
   }
 });
@@ -85,12 +100,23 @@ router.delete('/:orderId', async (req, res, next) => {
     const id = req.params.orderId;
     const deletedOrder = await Order.findByIdAndDelete(id);
     deletedOrder ? (
-      res.status(200).json(deletedOrder)
+      res.status(200).json({
+        message: 'Deleted order!',
+        request: {
+          type: 'POST',
+          url: 'http://localhost:5000/orders/',
+          body: {
+            productId: 'ID',
+            quantity: 'Number',
+          },
+        },
+      })
     ) : (
       res.status(404).json({ message: 'There is no order with that ID' }));
   } catch (error) {
     res.status(500).json({
-      message: 'There is a wrong format for the ID',
+      message: 'There is a something wrong',
+      error,
     });
   }
 });

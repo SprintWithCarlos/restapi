@@ -30,7 +30,10 @@ router.get('/', async (req, res, next) => {
       })
     );
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).json({
+      message: 'There is a something wrong',
+      error,
+    });
   }
 });
 // CREATE ONE
@@ -60,7 +63,10 @@ router.post('/', async (req, res, next) => {
       },
     });
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).json({
+      message: 'There is a something wrong',
+      error,
+    });
   }
 });
 // GET ONE
@@ -80,7 +86,8 @@ router.get('/:productId', async (req, res, next) => {
     );
   } catch (error) {
     res.status(500).json({
-      message: 'There is a wrong format for the ID',
+      message: 'There is a something wrong',
+      error,
     });
   }
 });
@@ -105,7 +112,8 @@ router.patch('/:productId', async (req, res, next) => {
     });
   } catch (error) {
     res.status(500).json({
-      message: 'There is something wrong',
+      message: 'There is a something wrong',
+      error,
     });
   }
 });
@@ -133,7 +141,8 @@ router.delete('/:productId', async (req, res, next) => {
     );
   } catch (error) {
     res.status(500).json({
-      message: 'There is a wrong format for the ID',
+      message: 'There is a something wrong',
+      error,
     });
   }
 });
